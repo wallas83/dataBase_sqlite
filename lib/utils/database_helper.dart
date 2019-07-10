@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:database_intro/models/user.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -29,6 +30,7 @@ class DatabaseHelper {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path, "maindb.db");
     var ourDb = await openDatabase(path, version: 1, onCreate: _onCreate);
+    return ourDb;
   }
 
   /*
@@ -40,5 +42,15 @@ class DatabaseHelper {
   void _onCreate(Database db, int newVersion) async {
     await db.execute(
         "CREATE TABLE $tableUser($columnId INTEGER PRIMARY KEY, $columnUserName TEXT, $columnPassword TEXT)");
+  }
+
+  //CRUD -CREATE - READ-UPDATE -DELETE
+
+//insertion
+  Future<int> saveUser(User user) async {
+    var dbClient = await db;
+    int res = await dbClient.insert("$tableUser", user.toMap());
+
+    return res;
   }
 }

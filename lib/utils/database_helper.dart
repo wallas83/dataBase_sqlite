@@ -1,12 +1,14 @@
 import 'dart:io';
-
 import 'package:database_intro/models/user.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'dart:async';
+
 
 class DatabaseHelper {
-  static final DatabaseHelper _instance = new DatabaseHelper().internal();
+
+  static final DatabaseHelper _instance = new DatabaseHelper.internal();
 
   factory DatabaseHelper() => _instance;
 
@@ -24,7 +26,7 @@ class DatabaseHelper {
     return _db;
   }
 
-  DatabaseHelper internal() {}
+  DatabaseHelper.internal();
 
   initDb() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
@@ -55,7 +57,7 @@ class DatabaseHelper {
     return res;
   }
 
-  Future<List> getAllusers() async {
+  Future<List> getAllUsers() async {
     var dbClient = await _db;
     var result = await dbClient.rawQuery("SELECT * FROM $tableUser");
 

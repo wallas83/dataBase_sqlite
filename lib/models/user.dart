@@ -10,6 +10,7 @@ class User {
     this._password = obj['password'];
     this._id = obj['id'];
   }
+  //constructors
   String get username => _username;
   String get password => _password;
   int get id => _id;
